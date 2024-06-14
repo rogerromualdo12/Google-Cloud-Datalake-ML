@@ -1,0 +1,137 @@
+# Default values for airflow.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+architectures:
+- "amd64"
+
+airflow:
+  useStandardNaming: true
+  createUserJob:
+    useHelmHooks: false
+    applyCustomEnv: false
+    tolerations:
+    - key: "arch"
+      value: "arm64"
+      operator: "Equal"
+      effect: "NoExecute"
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchExpressions:
+            - key: kubernetes.io/arch
+              operator: In
+              values:
+              - amd64
+  migrateDatabaseJob:
+    useHelmHooks: false
+    applyCustomEnv: false
+    tolerations:
+    - key: "arch"
+      value: "arm64"
+      operator: "Equal"
+      effect: "NoExecute"
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchExpressions:
+            - key: kubernetes.io/arch
+              operator: In
+              values:
+              - amd64
+  labels:
+    sidecar.istio.io/inject: "false"
+  images:
+    airflow:
+      repository: 280296955917.dkr.ecr.us-east-2.amazonaws.com/flcrm-airflow
+      tag:
+  volumes:
+  - name: bigquery-config
+    secret:
+      secretName: flcrm-airflow-bigquery
+  volumeMounts:
+  - mountPath: /.gcp
+    name: bigquery-config
+  env:
+  - name: GOOGLE_APPLICATION_CREDENTIALS
+    value: /.gcp/bigquery.json
+  # TODO: make this a common variable that is used below... Part 2
+  flower:
+    env:
+    - name: _PIP_ADDITIONAL_REQUIREMENTS
+      value: "opsgenie_sdk stripe flatten_json simple_salesforce"
+  scheduler:
+    tolerations:
+    - key: "arch"
+      value: "arm64"
+      operator: "Equal"
+      effect: "NoExecute"
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchExpressions:
+            - key: kubernetes.io/arch
+              operator: In
+              values:
+              - amd64
+    # env:
+    # - name: _PIP_ADDITIONAL_REQUIREMENTS
+    #   value: "opsgenie_sdk stripe flatten_json simple_salesforce"
+  triggerer:
+    persistence:
+      enabled: false
+    tolerations:
+    - key: "arch"
+      value: "arm64"
+      operator: "Equal"
+      effect: "NoExecute"
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchExpressions:
+            - key: kubernetes.io/arch
+              operator: In
+              values:
+              - amd64
+    # env:
+    # - name: _PIP_ADDITIONAL_REQUIREMENTS
+    #   value: "opsgenie_sdk stripe flatten_json simple_salesforce"
+  webserver:
+    tolerations:
+    - key: "arch"
+      value: "arm64"
+      operator: "Equal"
+      effect: "NoExecute"
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchExpressions:
+            - key: kubernetes.io/arch
+              operator: In
+              values:
+              - amd64
+    # env:
+    # - name: _PIP_ADDITIONAL_REQUIREMENTS
+    #   value: "opsgenie_sdk stripe flatten_json simple_salesforce"
+  workers:
+    persistence:
+      enabled: false
+    tolerations:
+    - key: "arch"
+      value: "arm64"
+      operator: "Equal"
+      effect: "NoExecute"
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchExpressions:
+            - key: kubernetes.io/arch
+              operator: In
+              values:
+              - amd64

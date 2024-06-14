@@ -1,0 +1,30 @@
+version: 2
+
+models:
+  - name: dim_customers
+    columns:
+      - name: ful_customer_key
+        tests:
+          - unique
+          - not_null
+    description: The dim_customers model is a tool that organizes customer data from
+      two different sources, Fulcrum and Stripe, into a single, easy-to-understand
+      format. It provides unique identifiers for each customer, along with their contact
+      information, location, company size, and creation date. It also includes direct
+      links to their profiles on both platforms. This model can be used to gain a
+      comprehensive understanding of the customer base, identify trends, and make
+      data-driven decisions.
+  - name: dim_subscriptions
+    columns:
+      - name: str_subscription_key
+        tests:
+          - unique
+          - not_null
+    description: The dim_subscriptions model provides a comprehensive view of customer
+      subscriptions. It combines data from various sources to give insights into customer
+      behavior, subscription details, and product usage. This model can be used to
+      track subscription status, payment methods, and usage patterns. It can help
+      in identifying trends, such as the most popular subscription plans or the correlation
+      between active devices and subscription type. This information can be used to
+      tailor marketing strategies, improve customer retention, and enhance product
+      offerings.

@@ -1,0 +1,37 @@
+fulcrum_dbt:
+  outputs:
+    dev:
+      dataset: dbt_dev
+      job_execution_timeout_seconds: 300
+      job_retries: 1
+      location: US
+      method: oauth
+      priority: interactive
+      project: customer-success-273518
+      threads: 6
+      type: bigquery
+
+    qa:
+      dataset: dbt_qa
+      job_execution_timeout_seconds: 300
+      job_retries: 1
+      location: US
+      method: service-account
+      keyfile: /.bigquery/bigquery.json
+      priority: interactive
+      project: customer-success-273518
+      threads: 6
+      type: bigquery
+
+    prod:
+      dataset: dbt_prod
+      job_execution_timeout_seconds: 300
+      job_retries: 1
+      method: oauth
+      location: US
+      priority: interactive
+      project: customer-success-273518
+      threads: 6
+      type: bigquery
+
+  target: dev

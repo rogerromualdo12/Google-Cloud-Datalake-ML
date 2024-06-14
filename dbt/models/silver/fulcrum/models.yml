@@ -1,0 +1,15 @@
+version: 2
+
+models:
+  - name: fulcrum_organizations
+    columns:
+      - name: id
+        tests:
+          - not_null
+          - unique
+  - name: fulcrum_subscriptions
+    columns:
+      - name: id
+        tests:
+          - not_null
+          - unique

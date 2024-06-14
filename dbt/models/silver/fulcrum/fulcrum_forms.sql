@@ -1,0 +1,63 @@
+WITH source AS (
+    SELECT * FROM {{ source('sni_fulcrum', 'forms') }}
+),
+
+renamed AS (
+    SELECT
+        id AS form_id,
+        resource_id,
+        name,
+        description,
+        version,
+        owner_id,
+        record_count,
+        record_changed_at,
+        bounding_box,
+        status,
+        record_title_key,
+        save_count,
+        shared,
+        status_field,
+        created_by_id,
+        updated_by_id,
+        gallery_app_id,
+        created_at,
+        updated_at,
+        auto_assign,
+        video_usage,
+        video_count,
+        photo_usage,
+        photo_count,
+        signature_usage,
+        signature_count,
+        total_data_usage,
+        total_data_count,
+        image,
+        image_file_size,
+        image_access_key,
+        title_field_keys,
+        audio_usage,
+        audio_count,
+        hidden_on_dashboard,
+        geometry_types,
+        geometry_required,
+        projects_enabled,
+        assignment_enabled,
+        database_size,
+        field_count,
+        data_field_count,
+        repeatable_count,
+        barcode_field_count,
+        signature_field_count,
+        photo_field_count,
+        video_field_count,
+        audio_field_count,
+        calculation_field_count,
+        record_link_field_count,
+        data_event_size,
+        system_type
+
+    FROM source
+)
+
+SELECT * FROM renamed

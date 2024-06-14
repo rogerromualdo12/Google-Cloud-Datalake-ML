@@ -1,0 +1,43 @@
+version: 2
+
+models:
+  - name: fct_customers
+    columns:
+      - name: ful_customer_key
+        tests:
+          - unique
+          - not_null
+    description: The fct_customers model is a tool that provides a comprehensive view
+      of customer data. It combines information from different Stripe sources to create
+      a single, unified record for each customer. This includes details like the number
+      of active devices, forms, and records a customer has, as well as their monthly
+      recurring revenue (MRR). This model can be used to analyze customer behavior,
+      identify trends, and make data-driven decisions. For example, it can help identify
+      which customers are most valuable based on their MRR and usage patterns.
+  - name: fct_subscriptions
+    columns:
+      - name: str_subscription_key
+        tests:
+          - unique
+          - not_null
+      - name: status
+        tests:
+          - accepted_values:
+              values: [active, canceled, trialing, past_due, unpaid, incomplete_expired,
+                paused]
+    description: The fct_subscriptions model provides a comprehensive view of customer
+      subscriptions. It combines data from various sources to give insights into subscription
+      details, customer usage, and revenue. It shows the number of paid and unpaid
+      licenses, total licenses, and the total amount spent. It also provides information
+      on the subscription plan interval, status, and dates. Additionally, it includes
+      customer usage data like the number of active devices, forms, and records. This
+      model can be used to track customer behavior, analyze revenue, and inform business
+      strategies.
+  - name: fct_revenue
+    description: The dbt model fct_revenue is a tool that helps track and analyze
+      revenue data. It works by gathering unique customer information and their corresponding
+      paid invoices. The model then organizes this data by the date the payment was
+      made, providing a clear picture of revenue trends over time. This can be used
+      to identify patterns, such as peak sales periods or customer payment habits.
+      The model's key feature is its ability to provide a comprehensive view of revenue
+      data, which can aid in strategic decision-making.

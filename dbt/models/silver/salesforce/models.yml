@@ -1,0 +1,33 @@
+version: 2
+
+models:
+  - name: salesforce_account
+    columns:
+      - name: id
+        tests:
+          - unique
+          - not_null
+  - name: salesforce_lead
+    columns:
+      - name: id
+        tests:
+          - unique
+          - not_null
+  - name: salesforce_opportunity
+    columns:
+      - name: id
+        tests:
+          - unique
+          - not_null
+  - name: salesforce_user
+    columns:
+      - name: id
+        tests:
+          - unique
+          - not_null
+  - name: salesforce_campaign
+    columns:
+      - name: id
+        tests:
+          - unique
+          - not_null

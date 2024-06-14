@@ -1,0 +1,11 @@
+version: 2
+models:
+  - name: astripe_subscription_items
+    description: The astripe_subscription_items model is a tool that provides up-to-date
+      information about subscription items by filtering only the most recent snapshot
+      of the data. It uses a method to always select the most recent data, ensuring
+      the information is current.
+  - name: astripe_subscriptions
+    description: The astripe_subscriptions model is a tool that provides up-to-date
+      information about customer subscriptions. It pulls the most recent data from
+      a the source table, focusing on subscription details.

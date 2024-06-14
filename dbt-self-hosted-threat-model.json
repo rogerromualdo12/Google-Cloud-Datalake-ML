@@ -1,0 +1,1213 @@
+{
+  "summary": {
+    "title": "New Threat Model"
+  },
+  "detail": {
+    "contributors": [],
+    "diagrams": [
+      {
+        "cells": [
+          {
+            "position": {
+              "x": 24,
+              "y": 337
+            },
+            "size": {
+              "width": 100,
+              "height": 100
+            },
+            "attrs": {
+              "text": {
+                "text": "DBT"
+              },
+              "body": {
+                "stroke": "red",
+                "strokeWidth": 2.5,
+                "strokeDasharray": null
+              }
+            },
+            "visible": true,
+            "shape": "process",
+            "zIndex": 1,
+            "id": "297b90d7-5ecb-452c-8a05-4030ebfc3ccf",
+            "data": {
+              "name": "DBT",
+              "description": "Running in GCP",
+              "type": "tm.Store",
+              "isTrustBoundary": false,
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "threats": [
+                {
+                  "id": "aa459c1d-7df5-4212-8ff3-95cef5f79877",
+                  "title": "Unauthorized access to DBT",
+                  "status": "Open",
+                  "severity": "Medium",
+                  "type": "Tampering",
+                  "description": "Provide a description for this threat",
+                  "mitigation": "Check access permissions",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 105,
+                  "score": ""
+                }
+              ],
+              "hasOpenThreats": true,
+              "isALog": false,
+              "storesCredentials": false,
+              "isEncrypted": false,
+              "isSigned": false
+            }
+          },
+          {
+            "position": {
+              "x": 34,
+              "y": 486
+            },
+            "size": {
+              "width": 160,
+              "height": 80
+            },
+            "attrs": {
+              "text": {
+                "text": "Big Query (Data Mart)"
+              },
+              "topLine": {
+                "strokeWidth": 1.5,
+                "strokeDasharray": null
+              },
+              "bottomLine": {
+                "strokeWidth": 1.5,
+                "strokeDasharray": null
+              }
+            },
+            "visible": true,
+            "shape": "store",
+            "zIndex": 2,
+            "id": "a8d237c2-b6b7-40ea-a0ef-6137cd8bd26a",
+            "data": {
+              "name": "Airflow/Compo\nser",
+              "description": "Running in GCP\n\nAggregates from various resources",
+              "type": "tm.Process",
+              "isTrustBoundary": false,
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "threats": [],
+              "hasOpenThreats": false,
+              "isALog": false,
+              "storesCredentials": false,
+              "isEncrypted": false,
+              "isSigned": false
+            }
+          },
+          {
+            "position": {
+              "x": 227,
+              "y": 200
+            },
+            "size": {
+              "width": 100,
+              "height": 100
+            },
+            "attrs": {
+              "text": {
+                "text": "Airflow/Compo\nser"
+              },
+              "body": {
+                "stroke": "#333333",
+                "strokeWidth": 1.5,
+                "strokeDasharray": null
+              }
+            },
+            "visible": true,
+            "shape": "process",
+            "zIndex": 4,
+            "id": "92d12e21-e420-491e-b980-490c32648d32",
+            "data": {
+              "name": "Tekton",
+              "description": "CI/CD support",
+              "type": "tm.Process",
+              "isTrustBoundary": false,
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "threats": [],
+              "hasOpenThreats": false
+            }
+          },
+          {
+            "position": {
+              "x": 841,
+              "y": 379
+            },
+            "size": {
+              "width": 100,
+              "height": 100
+            },
+            "attrs": {
+              "text": {
+                "text": "Tekton"
+              },
+              "body": {
+                "stroke": "#333333",
+                "strokeWidth": 1.5,
+                "strokeDasharray": null
+              }
+            },
+            "visible": true,
+            "shape": "process",
+            "zIndex": 8,
+            "id": "48491b8c-8e44-4b45-8298-ff5bea3a74d2",
+            "data": {
+              "name": "Github",
+              "description": "",
+              "type": "tm.Process",
+              "isTrustBoundary": false,
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "threats": [],
+              "hasOpenThreats": false
+            }
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "#333333",
+                "targetMarker": {
+                  "name": "block"
+                },
+                "sourceMarker": {
+                  "name": ""
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "Trigger DBT jobs",
+              "description": "",
+              "outOfScope": false,
+              "isBidirectional": false,
+              "reasonOutOfScope": "",
+              "protocol": "",
+              "isEncrypted": false,
+              "isPublicNetwork": false,
+              "hasOpenThreats": false,
+              "threats": [],
+              "isTrustBoundary": false
+            },
+            "id": "9d7af4fa-b2fa-4305-8a64-90a2f72c8fda",
+            "labels": [
+              {
+                "position": 0.5,
+                "attrs": {
+                  "label": {
+                    "text": "Send SQL"
+                  }
+                }
+              }
+            ],
+            "source": {
+              "cell": "297b90d7-5ecb-452c-8a05-4030ebfc3ccf"
+            },
+            "target": {
+              "cell": "a8d237c2-b6b7-40ea-a0ef-6137cd8bd26a"
+            },
+            "vertices": []
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "#333333",
+                "targetMarker": {
+                  "name": "block"
+                },
+                "sourceMarker": {
+                  "name": ""
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Boundary",
+              "name": "GCP",
+              "description": "",
+              "outOfScope": false,
+              "isBidirectional": false,
+              "reasonOutOfScope": "",
+              "protocol": "",
+              "isEncrypted": false,
+              "isPublicNetwork": false,
+              "hasOpenThreats": false,
+              "threats": [],
+              "isTrustBoundary": true
+            },
+            "id": "b2c7efe1-9145-41cb-a376-e21b6d30c43c",
+            "labels": [
+              {
+                "position": {
+                  "distance": 0.29031515816319436,
+                  "offset": -2.67594496765414
+                },
+                "attrs": {
+                  "label": {
+                    "text": "Trigger DBT jobs"
+                  }
+                }
+              }
+            ],
+            "source": {
+              "cell": "92d12e21-e420-491e-b980-490c32648d32"
+            },
+            "target": {
+              "cell": "297b90d7-5ecb-452c-8a05-4030ebfc3ccf"
+            },
+            "vertices": [
+              {
+                "x": 193,
+                "y": 341
+              }
+            ]
+          },
+          {
+            "shape": "trust-broundary-curve",
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Boundary",
+              "name": "AWS",
+              "description": "",
+              "isTrustBoundary": true,
+              "hasOpenThreats": false
+            },
+            "id": "6ace715e-8faf-4810-9def-dad04d3ef3d0",
+            "labels": [
+              {
+                "position": 0.5,
+                "attrs": {
+                  "label": {
+                    "text": "GCP"
+                  }
+                }
+              }
+            ],
+            "source": {
+              "x": 322,
+              "y": 9
+            },
+            "target": {
+              "x": 251,
+              "y": 601
+            },
+            "vertices": [
+              {
+                "x": 387,
+                "y": 218
+              },
+              {
+                "x": 362,
+                "y": 461
+              }
+            ]
+          },
+          {
+            "shape": "trust-broundary-curve",
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "Test execution\ncommand",
+              "description": "",
+              "isTrustBoundary": false,
+              "hasOpenThreats": false,
+              "outOfScope": false,
+              "isBidirectional": false,
+              "reasonOutOfScope": "",
+              "protocol": "",
+              "isEncrypted": false,
+              "isPublicNetwork": false,
+              "threats": []
+            },
+            "id": "957cd3a5-eb62-45b8-9c8d-30d0508aa19b",
+            "labels": [
+              {
+                "position": 0.5,
+                "attrs": {
+                  "label": {
+                    "text": "AWS"
+                  }
+                }
+              }
+            ],
+            "source": {
+              "x": 862,
+              "y": 18
+            },
+            "target": {
+              "x": 814,
+              "y": 553
+            },
+            "vertices": [
+              {
+                "x": 718,
+                "y": 310
+              }
+            ]
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "#333333",
+                "targetMarker": {
+                  "name": "block"
+                },
+                "sourceMarker": {
+                  "name": ""
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "Test results",
+              "description": "Pass/fail data",
+              "outOfScope": false,
+              "isBidirectional": false,
+              "reasonOutOfScope": "",
+              "protocol": "",
+              "isEncrypted": false,
+              "isPublicNetwork": false,
+              "hasOpenThreats": false,
+              "threats": [],
+              "isTrustBoundary": false
+            },
+            "id": "f494654e-bd40-41c1-aa7a-4fd8bf2c04be",
+            "labels": [
+              {
+                "position": 0.5,
+                "attrs": {
+                  "label": {
+                    "text": "Test execution\ncommand"
+                  }
+                }
+              }
+            ],
+            "source": {
+              "cell": "48491b8c-8e44-4b45-8298-ff5bea3a74d2"
+            },
+            "target": {
+              "cell": "297b90d7-5ecb-452c-8a05-4030ebfc3ccf"
+            },
+            "vertices": [
+              {
+                "x": 660,
+                "y": 392
+              },
+              {
+                "x": 510,
+                "y": 369
+              }
+            ]
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "red",
+                "strokeWidth": 2.5,
+                "targetMarker": {
+                  "name": "block"
+                },
+                "sourceMarker": {
+                  "name": ""
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "Code changes\nreported for CI/CD",
+              "description": "",
+              "outOfScope": false,
+              "isBidirectional": false,
+              "reasonOutOfScope": "",
+              "protocol": "",
+              "isEncrypted": false,
+              "isPublicNetwork": false,
+              "hasOpenThreats": true,
+              "threats": [
+                {
+                  "id": "bb82b6c0-e1b8-4b49-a74b-166662aed668",
+                  "title": "Expose sensitive data in logs",
+                  "status": "Open",
+                  "severity": "Medium",
+                  "type": "Information disclosure",
+                  "description": "Provide a description for this threat",
+                  "mitigation": "Only return success or failure in test results",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 106,
+                  "score": ""
+                }
+              ],
+              "isTrustBoundary": false
+            },
+            "id": "56ad5ad3-ff7d-41b7-8ba6-6054ad8a8ec8",
+            "labels": [
+              {
+                "position": 0.5,
+                "attrs": {
+                  "label": {
+                    "text": "Test results"
+                  }
+                }
+              }
+            ],
+            "source": {
+              "cell": "297b90d7-5ecb-452c-8a05-4030ebfc3ccf"
+            },
+            "target": {
+              "cell": "48491b8c-8e44-4b45-8298-ff5bea3a74d2"
+            },
+            "vertices": [
+              {
+                "x": 620,
+                "y": 427
+              }
+            ]
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "#333333",
+                "targetMarker": {
+                  "name": "block"
+                },
+                "sourceMarker": {
+                  "name": ""
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "CI results",
+              "description": "",
+              "outOfScope": false,
+              "isBidirectional": false,
+              "reasonOutOfScope": "",
+              "protocol": "",
+              "isEncrypted": false,
+              "isPublicNetwork": false,
+              "hasOpenThreats": false,
+              "threats": [],
+              "isTrustBoundary": false
+            },
+            "id": "42cb78bb-7538-4bf6-8d60-10e6fd8f827f",
+            "labels": [
+              {
+                "position": 0.5,
+                "attrs": {
+                  "label": {
+                    "text": "Code changes\nreported for CI/CD"
+                  }
+                }
+              }
+            ],
+            "source": {
+              "cell": "78ed8844-90d6-4258-89cc-2e94d8e93944"
+            },
+            "target": {
+              "cell": "48491b8c-8e44-4b45-8298-ff5bea3a74d2"
+            },
+            "vertices": [
+              {
+                "x": 712,
+                "y": 534
+              }
+            ]
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "#333333",
+                "targetMarker": {
+                  "name": "block"
+                },
+                "sourceMarker": {
+                  "name": ""
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "Job results",
+              "description": "",
+              "outOfScope": false,
+              "isBidirectional": false,
+              "reasonOutOfScope": "",
+              "protocol": "",
+              "isEncrypted": false,
+              "isPublicNetwork": false,
+              "hasOpenThreats": false,
+              "threats": [],
+              "isTrustBoundary": false
+            },
+            "id": "b407f1b4-940a-4e04-a1ab-21cc52265216",
+            "labels": [
+              {
+                "position": 0.5,
+                "attrs": {
+                  "label": {
+                    "text": "CI results"
+                  }
+                }
+              }
+            ],
+            "source": {
+              "cell": "48491b8c-8e44-4b45-8298-ff5bea3a74d2"
+            },
+            "target": {
+              "cell": "78ed8844-90d6-4258-89cc-2e94d8e93944"
+            },
+            "vertices": [
+              {
+                "x": 712,
+                "y": 492
+              }
+            ]
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "#333333",
+                "targetMarker": {
+                  "name": "block"
+                },
+                "sourceMarker": {
+                  "name": ""
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "External reporting on\njobs",
+              "description": "",
+              "outOfScope": false,
+              "isBidirectional": false,
+              "reasonOutOfScope": "",
+              "protocol": "",
+              "isEncrypted": false,
+              "isPublicNetwork": false,
+              "hasOpenThreats": false,
+              "threats": [],
+              "isTrustBoundary": false
+            },
+            "id": "23d2a413-169d-4dfa-a7e3-172c6762d25b",
+            "labels": [
+              {
+                "position": {
+                  "distance": 0.5215317367733857,
+                  "offset": -24.646194522078925
+                },
+                "attrs": {
+                  "label": {
+                    "text": "Job results"
+                  }
+                }
+              }
+            ],
+            "source": {
+              "cell": "297b90d7-5ecb-452c-8a05-4030ebfc3ccf"
+            },
+            "target": {
+              "cell": "92d12e21-e420-491e-b980-490c32648d32"
+            },
+            "vertices": [
+              {
+                "x": 135,
+                "y": 277
+              }
+            ]
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "#333333",
+                "targetMarker": {
+                  "name": "block"
+                },
+                "sourceMarker": {
+                  "name": ""
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "Fulrum admin reports",
+              "description": "CSV file reports",
+              "outOfScope": false,
+              "isBidirectional": false,
+              "reasonOutOfScope": "",
+              "protocol": "",
+              "isEncrypted": false,
+              "isPublicNetwork": false,
+              "hasOpenThreats": false,
+              "threats": [],
+              "isTrustBoundary": false
+            },
+            "id": "6e2d5cf9-149f-45ac-85c9-1f3afc9593c7",
+            "labels": [
+              {
+                "position": {
+                  "distance": 0.6436788719764847,
+                  "offset": 38.927506820234036
+                },
+                "attrs": {
+                  "label": {
+                    "text": "External reporting on\njobs"
+                  }
+                }
+              }
+            ],
+            "source": {
+              "cell": "92d12e21-e420-491e-b980-490c32648d32"
+            },
+            "target": {
+              "cell": "083decf7-74a5-41f2-83a6-37982363307c"
+            },
+            "vertices": [
+              {
+                "x": 403,
+                "y": 204
+              }
+            ]
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "#333333",
+                "targetMarker": {
+                  "name": "block"
+                },
+                "sourceMarker": {
+                  "name": ""
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "Fulcrum Admin report\nstorage",
+              "description": "",
+              "outOfScope": false,
+              "isBidirectional": false,
+              "reasonOutOfScope": "",
+              "protocol": "",
+              "isEncrypted": false,
+              "isPublicNetwork": false,
+              "hasOpenThreats": false,
+              "threats": [],
+              "isTrustBoundary": false
+            },
+            "id": "e73492d4-bf24-4308-a809-19adcd6d6a98",
+            "labels": [
+              {
+                "position": {
+                  "distance": 0.47875655725293065,
+                  "offset": -25.944776695193358
+                },
+                "attrs": {
+                  "label": {
+                    "text": "Fulrum admin reports"
+                  }
+                }
+              }
+            ],
+            "source": {
+              "cell": "636a7c4d-c3eb-41fb-abc6-21890523118f"
+            },
+            "target": {
+              "cell": "92d12e21-e420-491e-b980-490c32648d32"
+            },
+            "vertices": [
+              {
+                "x": 522,
+                "y": 289
+              }
+            ]
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "#333333",
+                "targetMarker": {
+                  "name": "block"
+                },
+                "sourceMarker": {
+                  "name": ""
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "Fulcrum Admin report\nloading",
+              "description": "",
+              "outOfScope": false,
+              "isBidirectional": false,
+              "reasonOutOfScope": "",
+              "protocol": "",
+              "isEncrypted": false,
+              "isPublicNetwork": false,
+              "hasOpenThreats": false,
+              "threats": [],
+              "isTrustBoundary": false
+            },
+            "id": "bc624859-bef3-42ec-af5f-3bd62c022133",
+            "labels": [
+              {
+                "position": {
+                  "distance": 0.6449035156187675,
+                  "offset": -41.11307671266903
+                },
+                "attrs": {
+                  "label": {
+                    "text": "Fulcrum Admin report\nstorage"
+                  }
+                }
+              }
+            ],
+            "source": {
+              "cell": "92d12e21-e420-491e-b980-490c32648d32"
+            },
+            "target": {
+              "cell": "a7110d71-d3f3-463a-bd75-73c9088e1faf"
+            },
+            "vertices": [
+              {
+                "x": 178,
+                "y": 161
+              }
+            ]
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "#333333",
+                "targetMarker": {
+                  "name": "block"
+                },
+                "sourceMarker": {
+                  "name": ""
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "Feeding bronze\ntables",
+              "description": "",
+              "outOfScope": false,
+              "isBidirectional": false,
+              "reasonOutOfScope": "",
+              "protocol": "",
+              "isEncrypted": false,
+              "isPublicNetwork": false,
+              "hasOpenThreats": false,
+              "threats": [],
+              "isTrustBoundary": false
+            },
+            "id": "092fc073-c4b3-4dde-af20-610b27b60b44",
+            "labels": [
+              {
+                "position": {
+                  "distance": 0.7767087219455069,
+                  "offset": 15.83023050998563
+                },
+                "attrs": {
+                  "label": {
+                    "text": "Fulcrum Admin report\nloading"
+                  }
+                }
+              }
+            ],
+            "source": {
+              "cell": "a7110d71-d3f3-463a-bd75-73c9088e1faf"
+            },
+            "target": {
+              "cell": "297b90d7-5ecb-452c-8a05-4030ebfc3ccf"
+            },
+            "vertices": [
+              {
+                "x": 45,
+                "y": 198
+              }
+            ]
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "#333333",
+                "targetMarker": {
+                  "name": "block"
+                },
+                "sourceMarker": {
+                  "name": ""
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "Publish builds",
+              "description": "",
+              "outOfScope": false,
+              "isBidirectional": false,
+              "reasonOutOfScope": "",
+              "protocol": "",
+              "isEncrypted": false,
+              "isPublicNetwork": false,
+              "hasOpenThreats": false,
+              "threats": [],
+              "isTrustBoundary": false
+            },
+            "id": "d2c7a30a-8f57-4aa6-9aa6-0cd691e76e09",
+            "labels": [
+              {
+                "position": {
+                  "distance": 0.6088473551493375,
+                  "offset": -24.227230219614402
+                },
+                "attrs": {
+                  "label": {
+                    "text": "Feeding bronze\ntables"
+                  }
+                }
+              }
+            ],
+            "source": {
+              "cell": "92d12e21-e420-491e-b980-490c32648d32"
+            },
+            "target": {
+              "cell": "a8d237c2-b6b7-40ea-a0ef-6137cd8bd26a"
+            },
+            "vertices": [
+              {
+                "x": 295,
+                "y": 425
+              }
+            ]
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "#333333",
+                "targetMarker": {
+                  "name": "block"
+                },
+                "sourceMarker": {
+                  "name": ""
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "Send SQL",
+              "description": "",
+              "outOfScope": false,
+              "isBidirectional": false,
+              "reasonOutOfScope": "",
+              "protocol": "",
+              "isEncrypted": false,
+              "isPublicNetwork": false,
+              "hasOpenThreats": false,
+              "threats": [
+                {
+                  "id": "f44ccf52-f7fa-49ff-9711-0ef3cf6584d3",
+                  "title": "Could expose sensitive data in results back to Tekton",
+                  "status": "Mitigated",
+                  "severity": "Medium",
+                  "type": "Information disclosure",
+                  "description": "",
+                  "mitigation": "Only return success/failure",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 104,
+                  "score": ""
+                }
+              ],
+              "isTrustBoundary": false,
+              "isALog": false,
+              "storesCredentials": false,
+              "isSigned": false
+            },
+            "id": "7c693ab7-6c66-470d-a522-94f3ac7d46d5",
+            "labels": [
+              {
+                "position": 0.5,
+                "attrs": {
+                  "label": {
+                    "text": "Publish builds"
+                  }
+                }
+              }
+            ],
+            "source": {
+              "cell": "48491b8c-8e44-4b45-8298-ff5bea3a74d2"
+            },
+            "target": {
+              "cell": "a7110d71-d3f3-463a-bd75-73c9088e1faf"
+            },
+            "vertices": [
+              {
+                "x": 948,
+                "y": 140
+              },
+              {
+                "x": 620,
+                "y": 80
+              }
+            ]
+          },
+          {
+            "position": {
+              "x": 542,
+              "y": 486
+            },
+            "size": {
+              "width": 100,
+              "height": 100
+            },
+            "attrs": {
+              "text": {
+                "text": "Github"
+              },
+              "body": {
+                "stroke": "#333333",
+                "strokeWidth": 1.5,
+                "strokeDasharray": null
+              }
+            },
+            "visible": true,
+            "shape": "process",
+            "zIndex": 11,
+            "id": "78ed8844-90d6-4258-89cc-2e94d8e93944",
+            "data": {
+              "name": "Opsgenie",
+              "description": "Trigger alert if failures",
+              "type": "tm.Process",
+              "isTrustBoundary": false,
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "threats": [],
+              "hasOpenThreats": false
+            }
+          },
+          {
+            "position": {
+              "x": 499,
+              "y": 126
+            },
+            "size": {
+              "width": 100,
+              "height": 100
+            },
+            "attrs": {
+              "text": {
+                "text": "Opsgenie"
+              },
+              "body": {
+                "stroke": "#333333",
+                "strokeWidth": 1.5,
+                "strokeDasharray": null
+              }
+            },
+            "visible": true,
+            "shape": "process",
+            "zIndex": 14,
+            "id": "083decf7-74a5-41f2-83a6-37982363307c",
+            "data": {
+              "name": "S3",
+              "description": "Fulcrum admin reports CSVs",
+              "type": "tm.Store",
+              "isTrustBoundary": false,
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "threats": [],
+              "hasOpenThreats": false,
+              "isALog": false,
+              "storesCredentials": false,
+              "isEncrypted": false,
+              "isSigned": false
+            }
+          },
+          {
+            "position": {
+              "x": 762,
+              "y": 240
+            },
+            "size": {
+              "width": 160,
+              "height": 80
+            },
+            "attrs": {
+              "text": {
+                "text": "S3"
+              },
+              "topLine": {
+                "strokeWidth": 1.5,
+                "strokeDasharray": null
+              },
+              "bottomLine": {
+                "strokeWidth": 1.5,
+                "strokeDasharray": null
+              }
+            },
+            "visible": true,
+            "shape": "store",
+            "zIndex": 19,
+            "id": "636a7c4d-c3eb-41fb-abc6-21890523118f",
+            "data": {
+              "name": "GCP bucket",
+              "description": "",
+              "type": "tm.Store",
+              "isTrustBoundary": false,
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "threats": [],
+              "hasOpenThreats": false,
+              "isALog": false,
+              "storesCredentials": false,
+              "isEncrypted": false,
+              "isSigned": false
+            }
+          },
+          {
+            "position": {
+              "x": 12,
+              "y": 12
+            },
+            "size": {
+              "width": 160,
+              "height": 80
+            },
+            "attrs": {
+              "text": {
+                "text": "GCP bucket"
+              },
+              "topLine": {
+                "strokeWidth": 1.5,
+                "strokeDasharray": null
+              },
+              "bottomLine": {
+                "strokeWidth": 1.5,
+                "strokeDasharray": null
+              }
+            },
+            "visible": true,
+            "shape": "store",
+            "zIndex": 21,
+            "id": "a7110d71-d3f3-463a-bd75-73c9088e1faf",
+            "data": {
+              "name": "Send SQL",
+              "description": "",
+              "type": "tm.Flow",
+              "isTrustBoundary": false,
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "threats": [],
+              "hasOpenThreats": false,
+              "isALog": false,
+              "storesCredentials": false,
+              "isEncrypted": false,
+              "isSigned": false,
+              "isBidirectional": false,
+              "protocol": "",
+              "isPublicNetwork": false
+            }
+          }
+        ],
+        "version": "2.0.9",
+        "title": "dbt-self-hosted",
+        "thumbnail": "./public/content/images/thumbnail.stride.jpg",
+        "id": 0,
+        "diagramType": "STRIDE"
+      }
+    ],
+    "diagramTop": 10,
+    "threatTop": 106
+  },
+  "version": "2.0.9"
+}

@@ -1,0 +1,22 @@
+version: 2
+
+models:
+  - name: stripe_customers
+    columns:
+      - name: id
+        tests:
+          - unique
+          - not_null
+  - name: stripe_subscriptions
+    description: The dbt model stripe_subscriptions is a view that ensures
+      there are no duplicates, renames the most commonly used fields to use
+      the agreed standard and implements simple data transformation for dates.
+    columns:
+      - name: id
+        tests:
+          - unique
+          - not_null
+  - name: stripe_prices
+    description: The dbt model stripe_prices is a view that ensures
+      there are no duplicates, renames the most commonly used fields to use
+      the agreed standard and implements simple data transformation for dates.

@@ -1,0 +1,232 @@
+version: 2
+
+sources:
+  - name: sni_stripe
+    database: customer-success-273518
+    freshness:
+      error_after: {count: 24, period: hour}
+    loaded_at_field: 'PARSE_TIMESTAMP("%Y%m%d%H%M%S",substr(run_date, 1, 14))'
+    schema: sni_stripe
+    tables:
+      - name: customers
+        description: This source includes the Customer ID, a unique identifier,
+          along with the customer's email, a descriptive field, and a timestamp
+          indicating account creation. It details the default payment method,
+          account balance, preferred currency, any applied discounts, and the
+          invoice prefix. The source also specifies invoice settings, indicating
+          live or test mode operations, and allows for custom metadata.
+          Additionally, it includes the customer's full name, phone number,
+          shipping details, subscription information, tax exemption status, and a
+          list of tax IDs. This comprehensive dataset is vital for customer
+          relationship management, financial reporting, and data-driven
+          decision-making, making it a valuable component of data modeling and
+          transformation processes in dbt projects.
+      - name: prices
+        description: This source features the Price ID, a unique identifier for
+          each price. It includes critical information such as the Product ID, linking
+          the price to a specific product, and the Active status, indicating whether
+          the price is currently in use. The source details the pricing model, either
+          per unit or tiered, and provides the Currency in which the price is denoted.
+          The Unit Amount and Unit Amount Decimal fields specify the price per unit in
+          the smallest currency unit and its decimal form, respectively. The source
+          also covers Billing Scheme, which outlines how the price is calculated, and
+          the Created field, a timestamp of the price creation. The Livemode status
+          reveals whether the price was created in live or test mode. The Metadata
+          field allows for custom key-value pairs, adding flexibility for additional
+          data. The Nickname is an optional descriptor for easier identification, and
+          the Tiers field is used for tiered pricing models, delineating the different
+          pricing tiers. Lastly, the Transform Quantity field provides details for
+          transforming quantities before they are billed, important for volume discounts
+          or graduated pricing. This data is essential for a comprehensive understanding
+          of pricing structures, crucial for billing, sales analysis, and strategic
+          planning in dbt models.
+      - name: subscriptions
+        descriptions: This source provides the Subscription ID, a unique identifier
+          for each subscription. It includes the Customer ID, linking the subscription
+          to a specific customer, and the Status, indicating the current state of the
+          subscription (e.g., active, past due, canceled). The source details the Items,
+          which are individual line items in a subscription, each containing a plan or
+          price ID and quantity. The Billing Cycle Anchor, a timestamp, denotes the start
+          of the subscription, and the Cancel at Period End field indicates whether the
+          subscription will cancel at the end of the current period. The Created field is
+          a timestamp for when the subscription was created. The Current Period Start and
+          End fields provide the start and end dates of the current billing period.
+          Additionally, the source includes the Days Until Due field for subscriptions
+          with invoice billing, specifying the number of days from invoice creation until
+          payment is due. The Default Payment Method field identifies the primary method
+          for billing, and the Discount field shows any discounts applied. Metadata allows
+          for custom key-value pairs for additional contextual information. The Quantity
+          field specifies the quantity of the plan in the subscription, and the Trial Start
+          and End fields denote the period of any trial attached to the subscription.
+          This extensive dataset is instrumental for analyzing customer subscription
+          patterns, financial forecasting, and revenue tracking, making it an essential
+          component for data modeling and analysis in dbt projects.
+      - name: products
+        descriptions: This endpoint furnishes the Product ID, serving as a unique identifier
+          for each product. It includes a Name, offering a human-readable identifier, and a
+          Description, giving detailed information about the product. The endpoint also features
+          the Active status, indicating whether the product is available for purchase. The
+          Attributes field lists customizable attributes of the product, useful for variants
+          like size or color. The Created field is a timestamp representing the product's
+          creation date in the Stripe system. The Images field contains URLs of images
+          associated with the product, enhancing the visual representation in your database.
+          The Livemode status indicates if the product was created in Stripe's live mode or
+          test mode. Metadata is provided for storing custom key-value pairs, allowing
+          additional contextual data to be attached. The Package Dimensions field, relevant
+          for physical goods, specifies the product's size for shipping purposes. The Shippable
+          flag indicates whether the product is a physical good that requires shipping. The
+          Type field delineates whether the product is a 'good' (a shippable product) or
+          'service' (not shippable). The Updated field is a timestamp for the last update made
+          to the product. The URL field optionally stores a webpage with additional information
+          about the product. This comprehensive dataset is essential for managing product
+          catalogs, tracking inventory, analyzing sales data, and facilitating operational
+          decisions in dbt models.
+  - name: sni_fulcrum
+    database: customer-success-273518
+    schema: airflow
+    tables:
+      - name: stripe_customers
+      - name: users
+        description: The dbt table users is a comprehensive database of user
+          information. It includes details like user ID, name, contact information, account
+          type, sign-in details, and more. This model can be used to understand user behavior,
+          track their activity, and analyze patterns. For instance, it can help identify
+          the most active users, track the usage of different account types, or monitor
+          the effectiveness of notifications. It can also be used to improve customer
+          service by providing detailed user profiles.
+      - name: organizations
+        description: The organizations table is a comprehensive database that
+          provides detailed information about various organizations. It includes data
+          on aspects such as the organization's name, address, industry, data usage,
+          revenue, and more. This model can be used to gain insights into the characteristics
+          and behaviors of different organizations, which can be valuable for strategic
+          decision-making, market analysis, and customer relationship management. The model
+          reveals patterns and correlations in data usage, revenue, and industry trends among
+          organizations. It also highlights key features such as the number of active devices,
+          project counts, and the geographical location of sign-ups.
+      - name: customers
+        description: The customers is a legacy view that calculates a count of workflows
+          for each organization.
+      - name: subscriptions
+        description: The subscriptions table provides comprehensive data of customer subscription
+          details. It includes information like subscription status, payment details, and various
+          features enabled for each subscription. This model can be used to understand customer
+          behavior, track feature usage, and analyze subscription trends. It can help in identifying
+          patterns like the most popular subscription plans or features, and correlations like the
+          relationship between subscription duration and feature usage. This information can be used
+          to improve customer retention strategies, optimize pricing, and enhance product offerings.
+      - name: ita_form_stats
+        description: This is a legacy table that hasn't been updated sine 2022.
+      - name: projects
+        description: The projects table organizes and presents data about various
+          projects. It includes details like project ID, name, description, status, record count,
+          and dates. This model can be used to track project progress, identify trends, and make
+          data-driven decisions.
+      - name: forms
+        description: The dbt forms table organizes and simplifies complex data related to forms used
+          for each organization. It includes details like form ID, name, description, status, and usage
+          of different media like photos, videos, and signatures. This model can help businesses understand
+          how their forms are being used, which forms are most popular, and where changes might be needed.
+          It can also highlight patterns such as peak usage times or common form fields. This information
+          can be used to improve form design, streamline processes, and enhance customer experience.
+      - name: memberships
+        description: The dbt memberships table organizes and presents data about memberships in a user-friendly way.
+          This model can be used to track and analyze membership details such as activation dates, user and
+          organization IDs, roles, status, and API key requests. This table is related to the Stripe subscriptions
+          counterpart It can help businesses understand their member base better, identify trends, and make
+          informed decisions.
+      - name: roles
+        description: The roles table organizes and categorizes different roles within each organization.
+          It provides a detailed overview of each role's permissions and responsibilities, such as managing
+          subscriptions, updating the organization, managing members, and more. This model can be used to understand
+          the structure of an organization and to identify any gaps or overlaps in roles. It can also be used to
+          streamline operations by ensuring that each role has the necessary permissions to perform its tasks
+          efficiently.
+      - name: organization_mobile_devices
+        description: The organization_mobile_devices table organizes and presents data about mobile devices used within
+          each organization. It provides information such as the device's platform, manufacturer, model, and application
+          version. This model can be used to track and analyze the usage of different mobile devices within a company.
+          It can help identify trends, such as the most commonly used platforms or manufacturers, and can be used to
+          inform decisions about software compatibility and IT support.
+      - name: organization_mobile_device_registrations
+        description: The organization_mobile_device_registrations table organizes data about mobile device registrations
+          within an organization. It's like a digital logbook, keeping track of details such as the device's ID,
+          the user's ID, and the times when the device was registered and updated. This model can be used to understand
+          patterns like which devices are most commonly used, or if there are peak times for device registration.
+          It's a valuable resource for making data-driven decisions about device management and user behavior.
+      - name: workflows
+        description: The workflows table organizes and presents data about workflows. It's like a library catalog for
+          automated business processes like sending an email, showing who created or updated them, when changes were
+          made, and what those changes were. It can be used to track the progress of projects, identify bottlenecks,
+          and improve efficiency. The model reveals patterns such as the most active workflows or the most common
+          types of updates, which can inform strategic decisions.
+  - name: s_fulcrum_app
+    database: customer-success-273518
+    schema: s_fulcrum_app
+    tables:
+      - name: groups
+        description: The groups table provides detailed information about different user groups within an application.
+          It includes data such as the industry the group belongs to, whether the account is paid or not, the number of
+          members, and various features enabled for the group. This model can be used to understand user behavior,
+          track feature usage, and identify trends or patterns.
+      - name: flow_completed_appcues
+        description: The flow_completed_appcues table tracks user interactions with the Fulcrum app. It captures a wide
+          range of information, from basic user details to specific actions taken within the app. This data can be used
+          to understand user behavior, identify trends, and improve the user experience. For example, it can show which
+          features are most used, how often users complete certain tasks, and if there are any common issues or obstacles.
+      - name: organization_device_sync
+        description: The organization_device_sync tableprovides a comprehensive view of device usage across an organization.
+          It collects data such as device type, location, and usage patterns, which can be used to understand how and where
+          devices are being used within the organization. This information can help in making informed decisions about resource
+          allocation, security measures, and operational efficiency. The model also tracks events and timestamps, providing a
+          timeline of device activity.
+      - name: form_updated
+        description: The form_updated table organizes and presents data related each specific form. Displaying the
+          changes or events for each form.
+  - name: sni_salesforce
+    database: customer-success-273518
+    schema: sni_salesforce
+    tables:
+      - name: Account
+        description: This table stores information about the organizations.
+          It includes fields for account name, account type (e.g., customer, partner),
+          industry, revenue, address, and other contact details.
+      - name: AccountHistory
+        description: This table tracks the historical changes made to the records in
+          the Account table. It logs fields like the date of change, the nature of the
+          change (e.g., field modified), the old and new values for the field, and the
+          user who made the change. 
+      - name: User
+        description: The User table contains data about individuals who have access
+          to the Salesforce system. This includes both your organization's employees as
+          well as external users, like partners or contractors. Key fields include the
+          user's name, email address, role, profile, and status (active or inactive),
+          among others.
+      - name: Lead
+        description: The User table contains data about individuals who have access to
+          the Salesforce system. This includes both your organization's employees as well
+          as external users, like partners or contractors. Key fields include the user's
+          name, email address, role, profile, and status (active or inactive), among others.
+      - name: Opportunity
+        description: The Opportunity table is crucial for tracking sales deals in progress.
+          It includes information about potential revenue-generating events or sales transactions.
+          Key fields are opportunity name, account name, stage (e.g., prospecting, proposal,
+          negotiation), close date, amount, and probability of closing.
+  - name: airflow_stripe
+    database: customer-success-273518
+    schema: airflow_stripe
+    tables:
+      - name: subscriptions
+      - name: subscription_items
+  - name: sni_salesforce_history
+    database: customer-success-273518
+    schema: sni_salesforce_history
+    tables:
+      - name: bizible2__Bizible_Attribution_Touchpoint__c
+      - name: Campaign
+  - name: Operations_Master_Datasets
+    database: customer-success-273518
+    schema: Operations_Master_Datasets
+    tables:
+      - name: Manual_MRR
+      - name: Manual_MSP

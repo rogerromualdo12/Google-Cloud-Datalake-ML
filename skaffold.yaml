@@ -1,0 +1,67 @@
+apiVersion: skaffold/v4beta9
+kind: Config
+metadata:
+  name: datamart
+build:
+  platforms:
+    - linux/amd64
+  artifacts:
+  - image: 280296955917.dkr.ecr.us-east-2.amazonaws.com/flcrm-airflow
+    docker:
+      dockerfile: Dockerfile
+    sync:
+      manual:
+      - src: airflow/dags/**
+        dest: /opt/airflow/dags/
+  local:
+    useBuildkit: true
+    concurrency: 3
+deploy:
+  helm:
+    releases:
+      - name: flcrm-airflow
+        namespace: '{{.USER}}'
+        chartPath: charts/flcrm-airflow
+        valuesFiles:
+          - charts/flcrm-airflow/values.yaml
+          - charts/flcrm-airflow/helm_vars/secrets.nonprod.chaos.yaml
+        setValueTemplates:
+          airflow.images.airflow.tag: "{{.IMAGE_TAG}}"
+        useHelmSecrets: true
+profiles:
+- name: ci
+  build:
+    tagPolicy:
+        gitCommit:
+          variant: AbbrevCommitSha
+          ignoreChanges: true
+- name: arm
+  activation:
+  - env: FULCRUM_ARCH=arm64
+  build:
+    platforms:
+    - linux/arm64
+  patches:
+  - op: add
+    path: /deploy/helm/releases/0/setValueTemplates/airflow.scheduler.affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution.nodeSelectorTerms[0].matchExpressions[0].values[0]
+    value: arm64
+  - op: add
+    path: /deploy/helm/releases/0/setValueTemplates/airflow.triggerer.affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution.nodeSelectorTerms[0].matchExpressions[0].values[0]
+    value: arm64
+  - op: add
+    path: /deploy/helm/releases/0/setValueTemplates/airflow.webserver.affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution.nodeSelectorTerms[0].matchExpressions[0].values[0]
+    value: arm64
+  - op: add
+    path: /deploy/helm/releases/0/setValueTemplates/airflow.workers.affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution.nodeSelectorTerms[0].matchExpressions[0].values[0]
+    value: arm64
+  - op: add
+    path: /deploy/helm/releases/0/setValueTemplates/airflow.migrateDatabaseJob.affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution.nodeSelectorTerms[0].matchExpressions[0].values[0]
+    value: arm64
+  - op: add
+    path: /deploy/helm/releases/0/setValueTemplates/airflow.createUserJob.affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution.nodeSelectorTerms[0].matchExpressions[0].values[0]
+    value: arm64
+portForward:
+  - resourceType: service
+    resourceName: flcrm-airflow-webserver
+    namespace: "{{.USER}}"
+    port: 8080

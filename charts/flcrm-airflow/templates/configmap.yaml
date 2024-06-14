@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "flcrm-airflow.fullname" . }}
+  labels:
+    {{- include "flcrm-airflow.labels" . | nindent 4 }}
+data:
+  config.yaml: |
+    test: foo

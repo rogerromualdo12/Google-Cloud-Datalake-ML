@@ -1,0 +1,5 @@
+apache-airflow==2.8.0
+dbt-bigquery==1.7.2
+dbt-core==1.7.3
+google-cloud==0.34.0
+google-cloud-secret-manager==2.16.4

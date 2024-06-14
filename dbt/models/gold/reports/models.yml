@@ -1,0 +1,138 @@
+version: 2
+
+models:
+  - name: rpt_leads
+    columns:
+      - name: Lead_ID
+        tests:
+          - unique
+          - not_null
+    description: The rpt_leads model is a tool that organizes and presents data about
+      potential customers, or "leads". It pulls information from SalesForce, including
+      the lead's contact details, company, industry, and the source from which they
+      were acquired. It also tracks if and when a lead converts into a customer. This
+      model can be used to understand where leads are coming from, how effective different
+      lead sources are, and which types of leads are most likely to become customers.
+      This can help guide marketing and sales strategies.
+  - name: rpt_opportunities
+    columns:
+      - name: account_id
+        tests:
+          - not_null
+    description: The rpt_opportunities model is a tool that organizes and presents
+      data related to sales opportunities. It provides a comprehensive view of each
+      opportunity, including details about the account, the opportunity itself, and
+      the sales team involved. This model can be used to track sales performance,
+      identify trends, and make data-driven decisions. It reveals patterns such as
+      the most common lead sources, the average sales cycle duration, and the correlation
+      between company size and sales success. It also highlights key features like
+      the opportunity owner and the account's industry.
+  - name: rpt_accounts
+    description: The rpt_accounts model is a tool that organizes and presents key
+      information about a company's accounts. It includes details like account ID,
+      account name, account owner, company revenue, employee count, industry, and
+      market. It also indicates whether an account is a top parent account. This model
+      can be used to analyze account performance, identify trends, and make informed
+      business decisions. For example, it can help identify which industries are most
+      profitable or which account owners manage the most revenue.
+    columns:
+      - name: account_id
+        tests:
+          - not_null
+  - name: rpt_general_reporting
+    columns:
+      - name: fulcrum_id
+        tests:
+          - not_null
+    description: The rpt_general_reporting model is a comprehensive tool that combines
+      data from various sources to provide a holistic view of customer interactions.
+      It includes information about organizations, their subscriptions, and user activities.
+      This model can be used to track customer behavior, identify trends, and make
+      informed business decisions. It reveals patterns such as the correlation between
+      active devices and subscription plans, or the impact of sign-up sources on conversion
+      rates. Key features include the ability to track monthly revenue and identify
+      repeat users.
+  - name: rpt_forms
+    description: The rpt_forms model is a comprehensive model that provides detailed
+      information about theforms/apps created within each organization. It includes
+      data such as form name, description, version, owner, record count, status, and
+      more. This model can be used to track the usage and performance of different
+      forms/apps, identify patterns, and make data-driven decisions. For example,
+      it can help identify which forms are most frequently used, which have the most
+      data, or which are most often updated. This information can be valuable for
+      improving efficiency and effectiveness in data collection and management.
+    columns:
+      - name: form_id
+        tests:
+          - not_null
+          - unique
+          - relationships:
+              to: ref('fulcrum_forms')
+              field: form_id
+  - name: rpt_members
+    columns:
+      - name: user_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('fulcrum_users')
+              field: user_id
+    description: The rpt_members model is a comprehensive table that combines user
+      information, their roles, and their affiliations with organizations. It's like
+      a digital directory, providing a snapshot of who's who in the company, their
+      contact details, and their roles. It also tracks user activity, showing when
+      they last accessed the system. This model can be used to understand the structure
+      of the organization, track user activity, and facilitate communication.
+  - name: rpt_devices
+    columns:
+      - name: device_id
+        tests:
+          - not_null
+          - unique
+  - name: rpt_rgr
+    description: 'The rpt_rgr model is a comprehensive tool that provides detailed
+      insights into customer accounts. It tracks various aspects such as account ownership,
+      revenue, employee count, and industry. It also monitors changes in account ownership
+      and calculates the highest revenue (HighWaterMark) for the current and previous
+      month. The model further breaks down revenue into two categories: Managed Service
+      Provider (MSP) and Recurring GaaP Revenue (RGR), for each month from January
+      2022 until today.'
+    columns:
+      - name: Fulcrum_ID
+        tests:
+          - unique
+      - name: Fulcrum_ID
+        description: The unique Org/Cust join key
+  - name: rpt_fulcrum
+    description: The rpt_fulcrum model is a comprehensive tool that provides a detailed
+      overview of customer account activity. It tracks various metrics such as the
+      number of active users, data usage, and sign-up sources. It also monitors the
+      usage of different features like API tokens, data events, and workflows. This
+      model can help businesses understand their customers' behavior and preferences,
+      enabling them to make data-driven decisions.
+  - name: rpt_license_count
+    description: The rpt_license_count model is a tool that provides a comprehensive
+      view of customer subscription data. It tracks key details such as the number
+      of licenses, subscription status, and billing dates. This model can be used
+      to monitor customer behavior, identify trends, and make informed business decisions.
+      For example, it can help identify customers with expiring subscriptions, allowing
+      for timely renewal reminders. It can also highlight popular subscription plans,
+      guiding product development and marketing strategies.
+  - name: rpt_membership_count
+    description: The rpt_membership_count model is a tool that provides a comprehensive
+      view of membership data. It collects and organizes information about subscriptions,
+      customers, and their associated details from various sources. This model can
+      be used to track membership trends over time, identify patterns, and make informed
+      decisions about sales strategies. It can also help in understanding the performance
+      of different membership plans and the behavior of customers. The model reveals
+      correlations between various factors such as the account owner, sales director,
+      billing date, and membership count.
+  - name: rpt_stripe_mrr
+    description: The rpt_stripe_mrr model is a tool that helps to understand the monthly
+      recurring revenue (MRR) from Stripe subscriptions. It provides a detailed view
+      of each subscription, including the start date, cancellation date, status, and
+      monthly amount. It also calculates the MRR change over time, which can be used
+      to track revenue growth or decline. This model can be used to identify trends
+      in subscription behavior, such as the most common cancellation times or the
+      average subscription lifespan. It can also help to forecast future revenue based
+      on current subscription trends.
